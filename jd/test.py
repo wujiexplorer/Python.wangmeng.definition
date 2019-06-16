@@ -7,7 +7,8 @@ import csv
 # 定义函数抓取每页前30条商品信息
 def crow_first(n):
     # 构造每一页的url变化
-    url = 'https://search.jd.com/s_new.php?keyword=%E6%89%8B%E6%9C%BA&enc=utf-8&qrst=1&rt=1&stop=1&vt=2&cid2=653&cid3=655&page=' + str(
+    url = 'https://search.jd.com/s_new.php?keyword=%E6%89%8B%E6%9C%BA&' \
+          'enc=utf-8&qrst=1&rt=1&stop=1&vt=2&cid2=653&cid3=655&page=' + str(
         2 * n - 1)
     head = {'authority': 'search.jd.com',
             'method': 'GET',
@@ -33,7 +34,6 @@ def crow_first(n):
             pspu = data.xpath('//li/@data-spu')[i]
             pid = data.xpath('//li/@data-pid')[i]
             p_price = data.xpath('div/div[@class="p-price"]/strong/i/text()')
-            #p_comment = data.xpath('div/div[5]/strong/a/text()')
             p_name = data.xpath('div/div[@class="p-name p-name-type-2"]/a/em/text()')
             # 这个if判断用来处理那些价格可以动态切换的商品，比如上文提到的小米MIX2，他们的价格位置在属性中放了一个最低价
             if len(p_price) == 0:
@@ -50,7 +50,7 @@ def crow_last(n):
     a = time.time()
     b = '%.5f' % a
     url = 'https://search.jd.com/s_new.php?keyword=%E6%89%8B%E6%9C%BA&enc=utf-8&qrst=1&rt=1&stop=1&vt=2&wq=%E6%89%8B%E6%9C%BA&cid2=653&cid3=655&page=' + str(
-        2 * n) + '&s=' + str(48 * n - 20) + '&scrolling=y&log_id=' + str(b)
+        2 * n) + '&scrolling=y&log_id=' + str(b)
     head = {'authority': 'search.jd.com',
             'method': 'GET',
             'path': '/s_new.php?keyword=%E6%89%8B%E6%9C%BA&enc=utf-8&qrst=1&rt=1&stop=1&vt=2&cid2=653&cid3=655&page=2&s=30&scrolling=y&log_id=1560477410.86775&tpl=3_M&show_items=100003344497,100003395445,100005702200,100000651175,100000177756,8735304,100003242371,100002642218,7437786,100002425279,100004245926,100000773875,100002795955,3133811,100005228558,100000287145,7437710,100001467225,4120319,100004404954,100000650837,100003464635,7299782,7283905,100003062377,100000400128,100000993265,8485229,7652029,100003884564',
@@ -73,7 +73,6 @@ def crow_last(n):
             pspu = data.xpath('//li/@data-spu')[i]
             pid = data.xpath('//li/@data-pid')[i]
             p_price = data.xpath('div/div[@class="p-price"]/strong/i/text()')
-            #p_comment = data.xpath('div/div[5]/strong/a/text()')
             p_name = data.xpath('div/div[@class="p-name p-name-type-2"]/a/em/text()')
             if len(p_price) == 0:
                 p_price = data.xpath('div/div[@class="p-price"]/strong/@data-price')
